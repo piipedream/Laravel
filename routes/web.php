@@ -1,6 +1,7 @@
 <?php
 
-// use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('home');
@@ -56,3 +57,7 @@ Route::get('/message/all', 'App\Http\Controllers\ContactController@allData')->mi
 
 // Route::post('/contact/submit', 'App\Http\Controllers\ContactController@submit')->name('contact-form');
 Route::post('/message/submit', 'App\Http\Controllers\ContactController@submit')->middleware('auth')->name('contact-form');
+
+
+Route::post('/apptypeadd', 'App\Http\Controllers\ContactController@applicationTypeAdd')->middleware('auth')->name('applicationType-add');
+Route::post('/apptypedelete', 'App\Http\Controllers\ContactController@applicationTypeDelete')->middleware('auth')->name('applicationType-delete');

@@ -30,6 +30,16 @@
       <textarea name="message" id="message" class="form-control" placeholder="Введите сообщение"></textarea>
     </div>
 
+    <div class="mt-3 form-group">
+      <select class="form-select mt-3" name="category">
+        @foreach($data as $type)
+        <option value="{{ $type->name }}">
+            {{ $type->name }}
+        </option>
+        @endforeach
+    </select>
+    </div>
+
     <button type="submit" class="btn mt-3 btn-success">Отправить</button>
   </form>
 @endsection

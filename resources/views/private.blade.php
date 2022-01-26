@@ -11,6 +11,8 @@
 <div class="alert alert-info">
     <h3>{{ $elmnt->subject }}</h3>
     <p>{{ $elmnt->email }}</p>
+    <p>{{ $elmnt->status }}</p>
+    <p>{{ $elmnt->category }}</p>
     <p><small>{{ $elmnt->created_at }}</small></p>
     <a href="{{ route('contact-data-one', $elmnt->id) }}"><button class="btn btn-success">More...</button></a>
 </div>
