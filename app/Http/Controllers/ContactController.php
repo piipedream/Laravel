@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\ContactRequest;
 use App\Models\Contact;
+use App\Models\ApplicationType;
 use Illuminate\Support\Facades\Auth;
 
 class ContactController extends Controller{
@@ -16,6 +17,7 @@ class ContactController extends Controller{
       $contact->email = $req->input('email');
       $contact->subject = $req->input('subject');
       $contact->message = $req->input('message');
+      $contact->category = $req->input('category');
 
       $contact->save();
 
@@ -23,6 +25,7 @@ class ContactController extends Controller{
     }
 
     public function allData(){
+      $this->authorize('admin');
       return view('messages', ['data' => Contact::all()]);
     }
 
@@ -45,12 +48,9 @@ class ContactController extends Controller{
       return view('update-message', ['data' => $contact->find($id)]);
     }
 
-    public function updateMessageSubmit($id, ContactRequest $req){
+    public function updateMessageSubmit($id, Request $req){
       $contact = Contact::find($id);
-      $contact->name = $req->input('name');
-      $contact->email = $req->input('email');
-      $contact->subject = $req->input('subject');
-      $contact->message = $req->input('message');
+      $contact->status = $req->input('status');
 
       $contact->save();
 
@@ -61,4 +61,23 @@ class ContactController extends Controller{
       Contact::find($id)->delete();
       return redirect()->route('contact-data')->with('success', 'Сообщение было удалено');
     }
+
+    public function applicationTypeAdd(Request $req){
+      $req->validate([
+          'typeName' => 'required'
+      ]);
+      $ApplicationType = new ApplicationType();
+      $ApplicationType->name = $req->input('typeName');
+
+      $ApplicationType->save();
+
+      return redirect()->route('contact-data')->with('success', 'Type added');
+  }
+
+  public function applicationTypeDelete(Request $req){
+      $id = $req->input('category');
+      Contact::where('app_type','=',ApplicationType::find($id)->name)->delete();
+      $ApplicationType = ApplicationType::find($id)->delete();
+      return redirect()->route('contact-data', $id)->with('success', 'Type deleted');
+  }
 }
