@@ -22,6 +22,9 @@ class CreateContactsTable extends Migration
             $table->integer('user_id');
             $table->string('status')->default('new');
             $table->string('category');
+            $table->string('before_img');
+            $table->string('after_img')->nullable();
+            $table->string('rejectReason')->nullable();
             $table->timestamps();
             
         });

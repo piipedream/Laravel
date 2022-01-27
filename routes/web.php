@@ -7,13 +7,13 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
+Route::get('/', 'App\Http\Controllers\ContactController@getHomePage')->name('home');
+
 Route::get('/about', function () {
     return view('about');
 })->name('about');
 
-Route::get('/contact', function () {
-    return view('contact');
-})->middleware('auth')->name('contact');
+Route::get('/contact', 'App\Http\Controllers\ContactController@getCategory')->middleware('auth')->name('contact');
 
 Route::name('user.')->group(function(){
     Route::get('/private', 'App\Http\Controllers\ContactController@messagesByUser')->middleware('auth')->name('private');

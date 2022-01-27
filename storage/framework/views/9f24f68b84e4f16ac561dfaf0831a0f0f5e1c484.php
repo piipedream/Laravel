@@ -9,6 +9,9 @@
 <div class="alert alert-info">
     <h3><?php echo e($elmnt->subject); ?></h3>
     <p><?php echo e($elmnt->email); ?></p>
+    <p><?php echo e($elmnt->status); ?></p>
+    <p><?php echo e($elmnt->category); ?></p>
+    <p><?php echo e($elmnt->message); ?></p>
     <p><small><?php echo e($elmnt->created_at); ?></small></p>
     <a href="<?php echo e(route('contact-data-one', $elmnt->id)); ?>"><button class="btn btn-success">More...</button></a>
 </div>

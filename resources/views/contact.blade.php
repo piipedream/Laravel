@@ -5,7 +5,7 @@
 @section('content')
   <h1>Страница контактов</h1>
 
-  <form action="{{route('contact-form')}}" method="post">
+  <form action="{{route('contact-form')}}" method="post" enctype="multipart/form-data">
     @csrf
 
     <input name="user_id"id="user_id" style="display: none" value="{{ Auth::user()->id }}">
@@ -40,6 +40,11 @@
     </select>
     </div>
 
+    <div class="form-group mt-3">
+      <label for="beforeImage">Image</label>
+      <input type="file" class="form-control-file" id="beforeImage" name="beforeImage">
+    </div>
+    
     <button type="submit" class="btn mt-3 btn-success">Отправить</button>
   </form>
 @endsection

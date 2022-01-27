@@ -7,8 +7,23 @@
     <?php echo csrf_field(); ?>
 
     <div class="form-group mt-3">
-        <label for="name">Name</label>
-        <input type="text" name="name" placeholder="Name" id="name" class="form-control">
+        <label for="fio">FIO</label>
+        <input type="text" name="fio" placeholder="FIO" id="fio" class="form-control" pattern="[а-яА-ЯЁё- ]*">
+        <?php $__errorArgs = ['fio'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+        <div class="alert alert-danger"><?php echo e($message); ?></div>
+        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+    </div>
+
+    <div class="form-group mt-3">
+        <label for="name">Login</label>
+        <input type="text" name="name" placeholder="Login" id="name" class="form-control" pattern="[a-zA-Z]*">
         <?php $__errorArgs = ['name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -40,6 +55,36 @@ unset($__errorArgs, $__bag); ?>
         <label for="password">Password</label>
         <input type="password" name="password" placeholder="Password" id="password" class="form-control">
         <?php $__errorArgs = ['password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+        <div class="alert alert-danger"><?php echo e($message); ?></div>
+        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+    </div>
+
+    <div class="form-group mt-3">
+        <label for="password_confirmation">Confirm Password</label>
+        <input type="password" name="password_confirmation" placeholder="password confirmation" id="password_confirmation" class="form-control">
+        <?php $__errorArgs = ['password_confirmation'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+        <div class="alert alert-danger"><?php echo e($message); ?></div>
+        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+    </div>
+
+    <div class="form-group mt-3">
+        <label for="personal_data" class="form-check-label">Сonsent to the processing of personal data</label>
+        <input type="checkbox" name="personal_data" id="personal_data" class="form-check-label" checked>
+        <?php $__errorArgs = ['personal_data'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }

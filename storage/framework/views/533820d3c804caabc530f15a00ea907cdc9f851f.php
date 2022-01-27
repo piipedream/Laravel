@@ -11,6 +11,21 @@
 
     <button type="submit" class="btn btn-success mt-3">Add</button>
   </form>
+
+  <form action="<?php echo e(route('applicationType-delete')); ?>" method="post">
+    <?php echo csrf_field(); ?>
+
+    <select class="form-select mt-3" name="appType_select">
+        <?php $__currentLoopData = $app_data_type; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        <option value="<?php echo e($type->id); ?>">
+            <?php echo e($type->name); ?>
+
+        </option>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+    </select>
+
+    <button type="submit" class="btn btn-danger mt-3">Delete</button>
+</form>
   <h1>Все сообщения</h1>
   <?php $__currentLoopData = $data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $el): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
     <div class="alert alert-info">

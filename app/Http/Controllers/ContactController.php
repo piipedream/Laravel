@@ -7,6 +7,8 @@ use App\Http\Requests\ContactRequest;
 use App\Models\Contact;
 use App\Models\ApplicationType;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\ErrorHandler\Debug;
+use Illuminate\Support\Facades\Log;
 
 class ContactController extends Controller{
 
@@ -18,6 +20,9 @@ class ContactController extends Controller{
       $contact->subject = $req->input('subject');
       $contact->message = $req->input('message');
       $contact->category = $req->input('category');
+      if($req->file('beforeImage') != null) {
+        $contact->before_img = substr($req->file('beforeImage')->store('public/image') , 13);
+      }
 
       $contact->save();
 
@@ -26,7 +31,7 @@ class ContactController extends Controller{
 
     public function allData(){
       $this->authorize('admin');
-      return view('messages', ['data' => Contact::all()]);
+      return view('messages', ['data' => Contact::all(), 'app_data_type' => ApplicationType::all()]);
     }
 
     public function messagesByUser() {
@@ -49,8 +54,18 @@ class ContactController extends Controller{
     }
 
     public function updateMessageSubmit($id, Request $req){
+      $validateFields = $req->validate([
+        'afterImage' => 'mimes:png,jpg,jpeg,bmp|max:10240'
+      ]);
       $contact = Contact::find($id);
       $contact->status = $req->input('status');
+      if ($contact->status === "reject") {
+        $contact->rejectReason = $req->input('rejectReason');
+      }
+
+      if ($req->file('afterImage') != null) {
+          $contact->after_img = substr($req->file('afterImage')->store('public/image'), 13);
+      }
 
       $contact->save();
 
@@ -75,9 +90,21 @@ class ContactController extends Controller{
   }
 
   public function applicationTypeDelete(Request $req){
-      $id = $req->input('category');
-      Contact::where('app_type','=',ApplicationType::find($id)->name)->delete();
+      $id = $req->input('appType_select');
+      Contact::where('category','=',ApplicationType::find($id)->name)->delete();
       $ApplicationType = ApplicationType::find($id)->delete();
       return redirect()->route('contact-data', $id)->with('success', 'Type deleted');
   }
+
+  public function getCategory(Request $req) {
+    $data = ApplicationType::all();
+    return view('contact', ['data' => $data ]);
+  }
+
+  public function getHomePage() {
+    $data = Contact::orderBy('updated_at', 'DESC')->get()->where('status', '=', 'solved');
+
+    return view('home', ['data' => $data]);
+  }
+
 }
