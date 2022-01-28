@@ -13,16 +13,18 @@
 
       @if ( $data->before_img != null )
         <h3>Image before:</h3>
-        <img src="{{asset("storage/image/$data->before_img")}}" alt="">
+        <img style="max-width: 100%" src="{{asset("storage/image/$data->before_img")}}" alt="">
       @endif
 
       @if ( $data->after_img != null )
           <h3>Image after:</h3>
-          <img src="{{asset("storage/image/$data->after_img")}}" alt="">
+          <img style="max-width: 100%" src="{{asset("storage/image/$data->after_img")}}" alt="">
       @endif
 
       @can('admin')
-        <a href="{{route('contact-update', $data->id)}}"><button class="btn mt-3 btn-primary">Редактировать</button></a>
+      @if ($data->status!='solved')
+          <a href="{{route('contact-update', $data->id)}}"><button class="btn mt-3 btn-primary">Редактировать</button></a>
+      @endif
       @endcan
       <a href="{{route('contact-delete', $data->id)}}"><button class="btn mt-3 btn-danger show_confirm">Удалить</button></a>
     </div>

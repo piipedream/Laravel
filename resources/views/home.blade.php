@@ -38,8 +38,8 @@
     <p><small>{{ $elmnt->created_at }}</small></p>
     @if ( $elmnt->after_img != null )
         <div class="home_images">
-            <img class="home_image home_image_after" src="{{asset("storage/image/$elmnt->after_img")}}" alt="">
-            <img class="home_image home_image_before" src="{{asset("storage/image/$elmnt->before_img")}}" alt="">
+            <img style="max-width: 100%" class="home_image home_image_after" src="{{asset("storage/image/$elmnt->after_img")}}" alt="">
+            <img style="max-width: 100%" class="home_image home_image_before" src="{{asset("storage/image/$elmnt->before_img")}}" alt="">
         </div>
 
     @endif
